@@ -8,7 +8,19 @@ const createCachedChildGetter = require('./lib/createCachedChildGetter')
 const createStatusManager = require('./lib/createStatusManager')
 const castArray = require('./lib/castArray')
 
-function diff(treeA, treeB, { limit = Infinity, equal = (a, b) => a === b, path = 'children' } = {}) {
+/**
+ *
+ * @public
+ * @param treeA {T}
+ * @param treeB {T}
+ * @param opt {{}}
+ * @param [opt.limit=Infinity] - The limit of changed node
+ * @param [opt.equal=(a, b) => a === b] - The compare strategy of two node
+ * @param [opt.path='children']
+ *
+ * @return {Map}
+ */
+function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a === b, path = 'children' } = {}) {
   if (treeA === treeB || !treeA || !treeB) {
     return
   }
@@ -88,4 +100,4 @@ function diff(treeA, treeB, { limit = Infinity, equal = (a, b) => a === b, path 
   return sm.map
 }
 
-module.exports = diff
+module.exports = detectTreeChanged
