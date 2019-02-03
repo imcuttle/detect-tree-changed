@@ -44,35 +44,35 @@ It's shameless of use document of [@moyuyc/visit-tree](https://github.com/imcutt
 
 ### detectTreeChanged
 
-[index.js:23-101](https://github.com/imcuttle/detect-tree-changed/blob/8f3ad3bc4168394e27508e7dc0d3f82b68b0b0b5/index.js#L23-L101 'Source code on GitHub')
+[index.js:23-101](https://github.com/imcuttle/detect-tree-changed/blob/6df1832a7d5072066a9e896b826bd38bc5f5938c/index.js#L23-L101 "Source code on GitHub")
 
 #### Parameters
 
-- `treeA` {T}
-- `treeB` {T}
-- `opt` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {{}}
-  - `opt.limit` The limit of changed node (optional, default `Infinity`)
-  - `opt.equal` The compare strategy of two node (optional, default `(a,b)=>a===b`)
-  - `opt.path` (optional, default `'children'`)
+-   `treeA`  {T}
+-   `treeB`  {T}
+-   `opt` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {{}}
+    -   `opt.limit`  The limit of changed node (optional, default `Infinity`)
+    -   `opt.equal`  The compare strategy of two node (optional, default `(a,b)=>a===b`)
+    -   `opt.path`   (optional, default `'children'`)
 
-Returns **[Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map)**
+Returns **[Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map)** 
 
 ## Related
 
-- [@moyuyc/visit-tree](https://github.com/imcuttle/visit-tree) - Visit tree by pre or post DFS.
-- [detect-one-changed](https://github.com/imcuttle/detect-one-changed) - Detect first changed html and markdown between old text and new.
+-   [@moyuyc/visit-tree](https://github.com/imcuttle/visit-tree) - Visit tree by pre or post DFS.
+-   [detect-one-changed](https://github.com/imcuttle/detect-one-changed) - Detect first changed html and markdown between old text and new.
 
 ## Contributing
 
-- Fork it!
-- Create your new branch:  
-  `git checkout -b feature-new` or `git checkout -b fix-which-bug`
-- Start your magic work now
-- Make sure npm test passes
-- Commit your changes:  
-  `git commit -am 'feat: some description (close #123)'` or `git commit -am 'fix: some description (fix #123)'`
-- Push to the branch: `git push`
-- Submit a pull request :)
+-   Fork it!
+-   Create your new branch:  
+    `git checkout -b feature-new` or `git checkout -b fix-which-bug`
+-   Start your magic work now
+-   Make sure npm test passes
+-   Commit your changes:  
+    `git commit -am 'feat: some description (close #123)'` or `git commit -am 'fix: some description (fix #123)'`
+-   Push to the branch: `git push`
+-   Submit a pull request :)
 
 ## Authors
 
