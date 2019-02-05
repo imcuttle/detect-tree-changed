@@ -72,6 +72,7 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
           if (!sm.updated(node, ctx)) {
             return ctx.break()
           }
+          backTracking(ctx)
           // smTmp.updated(node, ctx)
         } else {
           let srcNodeChildren = castArray(node[path])
@@ -87,6 +88,7 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
             if (!sm.hasRemovedChild(node, ctx)) {
               return ctx.break()
             }
+            backTracking(ctx)
             // smTmp.hasRemovedChild(node, ctx)
           }
         }

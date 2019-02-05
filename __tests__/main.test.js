@@ -196,6 +196,10 @@ Array [
     "updated",
   ],
   Array [
+    "C",
+    "child-changed",
+  ],
+  Array [
     "D",
     "has-removed-child",
   ],
