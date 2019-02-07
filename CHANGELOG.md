@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/imcuttle/detect-tree-changed/compare/v1.1.0...v1.2.0) (2019-02-07)
+
+
+### Bug Fixes
+
+* use has-added-child instead of has-removed-child ([d509e0f](https://github.com/imcuttle/detect-tree-changed/commit/d509e0f))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/imcuttle/detect-tree-changed/compare/v1.0.1...v1.1.0) (2019-02-05)
 
