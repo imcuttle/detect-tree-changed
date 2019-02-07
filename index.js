@@ -85,7 +85,7 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
           }
 
           if (srcNodeChildren.length < destNodeChildren.length) {
-            if (!sm.hasRemovedChild(node, ctx)) {
+            if (!sm.hasAddedChild(node, ctx)) {
               return ctx.break()
             }
             backTracking(ctx)
