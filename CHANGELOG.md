@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/imcuttle/detect-tree-changed/compare/v1.2.0...v1.2.1) (2019-02-08)
+
+
+### Bug Fixes
+
+* use removed instead of added ([34edbc0](https://github.com/imcuttle/detect-tree-changed/commit/34edbc0))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/imcuttle/detect-tree-changed/compare/v1.1.0...v1.2.0) (2019-02-07)
 
