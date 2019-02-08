@@ -29,7 +29,7 @@ describe('detectTreeChanged', function() {
     ]
   }
 
-  it('should added', function() {
+  it('should removed', function() {
     const rlt = detectTreeChanged(
       nodeA,
       {},
@@ -39,9 +39,9 @@ describe('detectTreeChanged', function() {
     )
 
     expect(stripCtx(rlt)).toEqual([
-      [{ key: 'B' }, 'added'],
+      [{ key: 'B' }, 'removed'],
       [{ children: [{ key: 'B' }, { key: 'C' }], key: 'A' }, 'updated'],
-      [{ key: 'C' }, 'added']
+      [{ key: 'C' }, 'removed']
     ])
   })
 
@@ -181,7 +181,7 @@ describe('detectTreeChanged', function() {
 Array [
   Array [
     "F",
-    "added",
+    "removed",
   ],
   Array [
     "B",

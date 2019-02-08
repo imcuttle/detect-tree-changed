@@ -61,10 +61,9 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
       let { ref, index, broken } = nodeGetter(paths)
       // Not Found
       if (broken) {
-        if (!sm.added(node, ctx)) {
+        if (!sm.removed(node, ctx)) {
           return ctx.break()
         }
-        // smTmp.added(node, ctx)
 
         backTracking(ctx)
       } else {
