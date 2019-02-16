@@ -44,7 +44,7 @@ It's shameless of use document of [@moyuyc/visit-tree](https://github.com/imcutt
 
 ### detectTreeChanged
 
-[index.js:23-102](https://github.com/imcuttle/detect-tree-changed/blob/f297f7b0ee560348b34a8521f6f3df5c0a3b24a0/index.js#L23-L102 "Source code on GitHub")
+[index.js:23-120](https://github.com/imcuttle/detect-tree-changed/blob/ffb607ba66ea31d4c6fa82e4721ec0e159f703c2/index.js#L23-L120 "Source code on GitHub")
 
 #### Parameters
 
