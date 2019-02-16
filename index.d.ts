@@ -12,7 +12,7 @@ declare namespace detectTreeChanged {
     path?: string
   }
 
-  export type Status = 'child-changed' | 'updated' | 'removed' | 'has-added-child'
+  export type Status = 'child-changed' | 'updated' | 'added' | 'has-removed-child'
 }
 
 declare type detectTreeChanged<T> = (

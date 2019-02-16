@@ -29,7 +29,7 @@ describe('detectTreeChanged', function() {
     ]
   }
 
-  it('should removed', function() {
+  it('should added', function() {
     const rlt = detectTreeChanged(
       nodeA,
       {},
@@ -39,13 +39,13 @@ describe('detectTreeChanged', function() {
     )
 
     expect(stripCtx(rlt)).toEqual([
-      [{ key: 'B' }, 'removed'],
+      [{ key: 'B' }, 'added'],
       [{ children: [{ key: 'B' }, { key: 'C' }], key: 'A' }, 'updated'],
-      [{ key: 'C' }, 'removed']
+      [{ key: 'C' }, 'added']
     ])
   })
 
-  it('should has-added-child', function() {
+  it('should has-removed-child', function() {
     const eqFn = jest.fn((a, b) => {
       return eq(a, b)
     })
@@ -63,7 +63,7 @@ describe('detectTreeChanged', function() {
     const cloned = { ...nodeA }
     delete cloned.children
     expect(eqFn).toBeCalledWith({ key: 'A' }, cloned)
-    expect(stripCtx(rlt)).toEqual([[{ key: 'A' }, 'has-added-child']])
+    expect(stripCtx(rlt)).toEqual([[{ key: 'A' }, 'has-removed-child']])
   })
 
   it('should updated', function() {
@@ -181,7 +181,7 @@ describe('detectTreeChanged', function() {
 Array [
   Array [
     "F",
-    "removed",
+    "added",
   ],
   Array [
     "B",
@@ -201,7 +201,7 @@ Array [
   ],
   Array [
     "D",
-    "has-added-child",
+    "has-removed-child",
   ],
 ]
 `)
