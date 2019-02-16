@@ -27,7 +27,8 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
 
   const sm = createStatusManager({ limit })
   // const smTmp = createStatusManager({ limit: Infinity })
-  const nodeGetter = createCachedChildGetter(treeB, {})
+  const dp = {}
+  const nodeGetter = createCachedChildGetter(treeB, dp, { path })
 
   const equalMethod = (a, b) => {
     if (a === b) return true
@@ -42,12 +43,12 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
   const backTracking = fromCtx => {
     walk(
       fromCtx,
-      ctx => {
-        if (fromCtx !== ctx && ctx.node) {
-          if (sm.hasChanged(ctx.node)) {
+      (ctxNode, ctx) => {
+        if (fromCtx !== ctxNode && ctxNode.node) {
+          if (sm.hasChanged(ctxNode.node)) {
             return ctx.break()
           }
-          sm.childChanged(ctx.node, ctx)
+          sm.childChanged(ctxNode.node, ctxNode)
         }
       },
       { order: 'pre', path: 'parentCtx' }
@@ -57,8 +58,25 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
   walk(
     treeA,
     (node, ctx) => {
-      const paths = ctx.paths
-      let { ref, index, broken } = nodeGetter(paths)
+      let bNodeGet
+      let paths = ctx.paths
+      if (ctx.parentCtx && !ctx.parentCtx.bNodeGet) {
+        const parentPaths = paths.slice(0, -1)
+        let parentBNodeGet = (ctx.parentCtx.bNodeGet = nodeGetter(parentPaths))
+
+        if (!parentBNodeGet.broken && parentBNodeGet.ref) {
+          bNodeGet = createCachedChildGetter(parentBNodeGet.ref, {}, { path })([ctx.index])
+        } else {
+          bNodeGet = { ref: undefined, index: ctx.index, broken: true }
+        }
+      } else if (ctx.parentCtx && ctx.parentCtx.bNodeGet) {
+        bNodeGet = createCachedChildGetter(ctx.parentCtx.bNodeGet.ref, {}, { path })([ctx.index])
+      } else {
+        bNodeGet = nodeGetter(paths)
+      }
+      let { ref, index, broken } = bNodeGet
+      ctx.bNodeGet = bNodeGet
+      dp[paths.join('.')] = bNodeGet.ref
       // Not Found
       if (broken) {
         if (!sm.added(node, ctx)) {

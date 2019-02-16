@@ -45,6 +45,19 @@ describe('detectTreeChanged', function() {
     ])
   })
 
+  it('should added with limit', function() {
+    const rlt = detectTreeChanged(
+      nodeA,
+      {},
+      {
+        equal: eq,
+        limit: 1
+      }
+    )
+
+    expect(stripCtx(rlt)).toEqual([[{ key: 'B' }, 'added']])
+  })
+
   it('should has-removed-child', function() {
     const eqFn = jest.fn((a, b) => {
       return eq(a, b)
@@ -202,6 +215,46 @@ Array [
   Array [
     "D",
     "has-removed-child",
+  ],
+]
+`)
+  })
+
+  it('should complex - 2', function() {
+    //       A
+    //  B    C    D
+    // E F   G
+    let rlt = detectTreeChanged(nodeB, { ...nodeB, children: [] }, { equal: eq })
+
+    expect(stripCtxKey(rlt)).toMatchInlineSnapshot(`
+Array [
+  Array [
+    "E",
+    "added",
+  ],
+  Array [
+    "B",
+    "added",
+  ],
+  Array [
+    "A",
+    "child-changed",
+  ],
+  Array [
+    "F",
+    "added",
+  ],
+  Array [
+    "G",
+    "added",
+  ],
+  Array [
+    "C",
+    "added",
+  ],
+  Array [
+    "D",
+    "added",
   ],
 ]
 `)
