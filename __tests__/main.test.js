@@ -4,14 +4,20 @@
  * @date 2018/4/4
  */
 const detectTreeChanged = require('../')
+const { readFileSync } = require('./helper')
 const eq = require('shallowequal')
+const isequalwith = require('lodash.isequalwith')
+
+const rehype = require('rehype')()
+  .use({ settings: { position: false, fragment: true } })
+  .freeze()
 
 function stripCtx(map) {
   return [...map].map(([key, value]) => [key, value.status])
 }
 
-function stripCtxKey(map) {
-  return [...map].map(([key, value]) => [key.key, value.status])
+function stripCtxKey(map, { keyName = 'key' } = {}) {
+  return [...map].map(([key, value]) => [keyName ? key[keyName] : key, value.status])
 }
 
 describe('detectTreeChanged', function() {
@@ -255,6 +261,47 @@ Array [
   Array [
     "D",
     "added",
+  ],
+]
+`)
+  })
+
+  it('should used in html', function() {
+    let rlt = detectTreeChanged(rehype.parse(readFileSync('html/old')), rehype.parse(readFileSync('html/new')), {
+      limit: 1,
+      equal: (a, b) => {
+        return isequalwith(Object.assign({}, a, { position: null }), Object.assign({}, b, { position: null }))
+      }
+    })
+
+    expect(stripCtxKey(rlt, { keyName: null })).toMatchInlineSnapshot(`
+Array [
+  Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "type": "text",
+              "value": "本地测试文档",
+            },
+          ],
+          "properties": Object {
+            "dataKey": "law2e7r95pi__20190309_2357",
+            "dataText": "[测试] 本地测试文档",
+            "dataType": "concept",
+          },
+          "tagName": "a",
+          "type": "element",
+        },
+      ],
+      "properties": Object {
+        "id": "tempjsmz072fxwrtemp",
+      },
+      "tagName": "h1",
+      "type": "element",
+    },
+    "updated",
   ],
 ]
 `)
