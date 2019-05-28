@@ -20,6 +20,34 @@ function stripCtxKey(map, { keyName = 'key' } = {}) {
   return [...map].map(([key, value]) => [keyName ? key[keyName] : key, value.status])
 }
 
+function isHeadNode(node) {
+  return ['h1', 'h2', 'h3', 'h4'].includes(node && node.tagName && node.tagName.toLowerCase())
+}
+
+const linkyEqual = (nodeA, nodeB) => {
+  nodeA = Object.assign({}, nodeA, {
+    position: null,
+    children: null
+  })
+  nodeB = Object.assign({}, nodeB, {
+    position: null,
+    children: null
+  })
+
+  if (isHeadNode(nodeA)) {
+    nodeA = Object.assign({}, nodeA, {
+      properties: null
+    })
+  }
+  if (isHeadNode(nodeB)) {
+    nodeB = Object.assign({}, nodeB, {
+      properties: null
+    })
+  }
+
+  return isequalwith(nodeA, nodeB)
+}
+
 describe('detectTreeChanged', function() {
   //    A
   //  B  C
@@ -269,37 +297,38 @@ Array [
   it('should used in html', function() {
     let rlt = detectTreeChanged(rehype.parse(readFileSync('html/old')), rehype.parse(readFileSync('html/new')), {
       limit: 1,
-      equal: (a, b) => {
-        return isequalwith(Object.assign({}, a, { position: null }), Object.assign({}, b, { position: null }))
-      }
+      equal: linkyEqual
     })
 
     expect(stripCtxKey(rlt, { keyName: null })).toMatchInlineSnapshot(`
 Array [
   Array [
     Object {
-      "children": Array [
-        Object {
-          "children": Array [
-            Object {
-              "type": "text",
-              "value": "本地测试文档",
-            },
-          ],
-          "properties": Object {
-            "dataKey": "law2e7r95pi__20190309_2357",
-            "dataText": "[测试] 本地测试文档",
-            "dataType": "concept",
-          },
-          "tagName": "a",
-          "type": "element",
-        },
-      ],
-      "properties": Object {
-        "id": "tempjsmz072fxwrtemp",
-      },
-      "tagName": "h1",
-      "type": "element",
+      "type": "text",
+      "value": "测试一下lp",
+    },
+    "updated",
+  ],
+]
+`)
+  })
+
+  it('should used in linky-html', function() {
+    let rlt = detectTreeChanged(
+      rehype.parse(readFileSync('linky-html/old.html')),
+      rehype.parse(readFileSync('linky-html/new.html')),
+      {
+        limit: 1,
+        equal: linkyEqual
+      }
+    )
+
+    expect(stripCtxKey(rlt, { keyName: null })).toMatchInlineSnapshot(`
+Array [
+  Array [
+    Object {
+      "type": "text",
+      "value": "asdasd",
     },
     "updated",
   ],

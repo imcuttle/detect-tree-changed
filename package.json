@@ -56,6 +56,6 @@
     "shallowequal": "^1.1.0"
   },
   "dependencies": {
-    "@moyuyc/visit-tree": "^1.0.1"
+    "@moyuyc/visit-tree": "^2.0.1"
   }
 }

@@ -51,40 +51,50 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
           sm.childChanged(ctxNode.node, ctxNode)
         }
       },
-      { order: 'pre', path: 'parentCtx' }
+      { path: 'parentCtx' }
     )
   }
 
   walk(
     treeA,
+    null,
     (node, ctx) => {
       let bNodeGet
       let paths = ctx.paths
-      if (ctx.parentCtx && !ctx.parentCtx.bNodeGet) {
-        const parentPaths = paths.slice(0, -1)
-        let parentBNodeGet = (ctx.parentCtx.bNodeGet = nodeGetter(parentPaths))
+      // Remove assigned from parentCtx
+      // ctx.bNodeGet = null
+      //
+      // // clone ctx.parentCtx for mutating ctx.parentCtx.bNodeGet
+      // if (ctx.parentCtx && !ctx.parentCtx.bNodeGet) {
+      //   const hasParent = !!paths.length
+      //   const parentPaths = paths.slice(0, -1)
+      //   let parentBNodeGet = (ctx.parentCtx.bNodeGet = nodeGetter(parentPaths))
+      //
+      //   if (!parentBNodeGet.broken && parentBNodeGet.ref) {
+      //     bNodeGet = createCachedChildGetter(parentBNodeGet.ref, {}, { path })([ctx.index])
+      //   } else {
+      //     bNodeGet = { ref: undefined, index: ctx.index, broken: true }
+      //   }
+      // } else if (ctx.parentCtx && ctx.parentCtx.bNodeGet) {
+      //   bNodeGet = createCachedChildGetter(ctx.parentCtx.bNodeGet.ref, {}, { path })([ctx.index])
+      // } else {
+      //   bNodeGet = nodeGetter(paths)
+      // }
 
-        if (!parentBNodeGet.broken && parentBNodeGet.ref) {
-          bNodeGet = createCachedChildGetter(parentBNodeGet.ref, {}, { path })([ctx.index])
-        } else {
-          bNodeGet = { ref: undefined, index: ctx.index, broken: true }
-        }
-      } else if (ctx.parentCtx && ctx.parentCtx.bNodeGet) {
-        bNodeGet = createCachedChildGetter(ctx.parentCtx.bNodeGet.ref, {}, { path })([ctx.index])
-      } else {
-        bNodeGet = nodeGetter(paths)
-      }
-      let { ref, index, broken } = bNodeGet
-      ctx.bNodeGet = bNodeGet
-      dp[paths.join('.')] = bNodeGet.ref
+      let { ref, index, broken } = nodeGetter(paths)
+      ctx.bNodeGet = nodeGetter(paths)
       // Not Found
       if (broken) {
+        dp[paths.join('.')] = undefined
+
         if (!sm.added(node, ctx)) {
           return ctx.break()
         }
 
         backTracking(ctx)
       } else {
+        dp[paths.join('.')] = ref
+
         if (!equalMethod(node, ref)) {
           if (!sm.updated(node, ctx)) {
             return ctx.break()
@@ -111,6 +121,7 @@ function detectTreeChanged(treeA, treeB, { limit = Infinity, equal = (a, b) => a
         }
       }
     },
+
     { order: 'post', path }
   )
 
