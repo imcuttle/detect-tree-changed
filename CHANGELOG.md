@@ -1,3 +1,13 @@
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/imcuttle/detect-tree-changed/compare/v1.2.3...v1.2.4) (2019-05-28)
+
+
+### Bug Fixes
+
+* parentCtx ([6bf6a87](https://github.com/imcuttle/detect-tree-changed/commit/6bf6a87))
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/imcuttle/detect-tree-changed/compare/v1.2.2...v1.2.3) (2019-02-16)
 

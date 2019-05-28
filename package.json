@@ -1,6 +1,6 @@
 {
   "name": "detect-tree-changed",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "main": "index.js",
   "description": "Detect tow tree what is updated",
   "author": "imcuttle <moyuyc95@gmail.com>",
